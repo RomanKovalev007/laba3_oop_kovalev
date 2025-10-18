@@ -7,15 +7,15 @@ TEST(OctagonTest, DefaultConstructor) {
 }
 
 TEST(OctagonTest, ValidOctagonCreation) {
-    Point points[8] = {{2,0}, {4,0}, {6,2}, {6,4}, {4,6}, {2,6}, {0,4}, {0,2}};
-    EXPECT_NO_THROW(Octagon oct(points));
+    Point points1[8] = {{2,0}, {4,0}, {6,2}, {6,4}, {4,6}, {2,6}, {0,4}, {0,2}};
+    Point points2[8] = {{2,0}, {4,0}, {6,2}, {6,4}, {4,4}, {2,6}, {0,4}, {0,2}};
+    EXPECT_NO_THROW(Octagon oct(points1));
+    EXPECT_NO_THROW(Octagon oct(points2));
 }
 
 TEST(OctagonTest, InvalidOctagonCreation) {
     Point invalidPoints1[8] = {{0,0}, {1,0}, {2,0}, {3,0}, {4,0}, {5,0}, {6,0}, {7,0}};
-    Point invalidPoints2[8] = {{2,0}, {4,0}, {6,2}, {6,4}, {4,4}, {2,6}, {0,4}, {0,2}};
     EXPECT_THROW(Octagon oct(invalidPoints1), std::invalid_argument);
-    EXPECT_THROW(Octagon oct(invalidPoints2), std::invalid_argument);
 }
 
 TEST(OctagonTest, CopyConstructor) {
@@ -52,10 +52,15 @@ TEST(OctagonTest, MoveAssignment) {
 }
 
 TEST(OctagonTest, AreaCalculation) {
-    Point points[8] = {{2,0}, {4,0}, {6,2}, {6,4}, {4,6}, {2,6}, {0,4}, {0,2}};
-    const Octagon* oct = new Octagon(points);
-    double area = oct->area();
-    EXPECT_EQ(area, 28.0);
+    Point points1[8] = {{2,0}, {4,0}, {6,2}, {6,4}, {4,6}, {2,6}, {0,4}, {0,2}};
+    Point points2[8] = {{2,0}, {4,0}, {6,2}, {6,4}, {4,4}, {2,6}, {0,4}, {0,2}};
+
+    const Octagon* oct1 = new Octagon(points1);
+    const Octagon* oct2 = new Octagon(points2);
+    double area1 = oct1->area();
+    double area2 = oct2->area();
+    EXPECT_EQ(area1, 28.0);
+    EXPECT_EQ(area2, 24.0);
 }
 
 TEST(OctagonTest, GeometricCenter) {

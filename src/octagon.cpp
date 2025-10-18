@@ -13,10 +13,11 @@ Octagon::Octagon(const Point newPoints[8]) {
     for (size_t i = 0; i < 8; i++){
         points[i] = newPoints[i]; 
     }
+    sort();
     if (!isOctagon()) {
         throw std::invalid_argument("it is not a octagon");
     }
-    sort();
+
 }
 
 Octagon::Octagon(const Octagon& other){
@@ -89,10 +90,10 @@ void Octagon::read(std::istream& in) {
     for (size_t i = 0; i < 8; i++) {
         in >> points[i].x >> points[i].y;
     }
+    sort();
     if (!isOctagon()) {
         throw std::invalid_argument("it is not a octagon");
     }
-    sort();
 }
 
 Octagon *Octagon::clone() const{
@@ -115,24 +116,19 @@ void Octagon::sort(){
 }
 
 bool Octagon::isOctagon() {
-    for (int i = 0; i < 8; ++i) {
-        for (int j = i + 1; j < 8; ++j) {
-            for (int k = j + 1; k < 8; ++k) {
-                Point a = points[i];
-                Point b = points[j];
-                Point c = points[k];
-                
-                double side1 = std::sqrt(std::pow(b.x - a.x, 2) + std::pow(b.y - a.y, 2));
-                double side2 = std::sqrt(std::pow(c.x - a.x, 2) + std::pow(c.y - a.y, 2));
-                double side3 = std::sqrt(std::pow(c.x - b.x, 2) + std::pow(c.y - b.y, 2));
+    for (int i = 0; i < 8; ++i){ 
+        Point a = points[i];
+        Point b = points[(i+1)%8];
+        Point c = points[(i+2)%8];
+        
+        double side1 = std::sqrt(std::pow(b.x - a.x, 2) + std::pow(b.y - a.y, 2));
+        double side2 = std::sqrt(std::pow(c.x - a.x, 2) + std::pow(c.y - a.y, 2));
+        double side3 = std::sqrt(std::pow(c.x - b.x, 2) + std::pow(c.y - b.y, 2));
 
-                if ((side1+side2 <= side3) || (side1+side3 <= side2) || (side3+side2 <= side1)){
-                    return false;
-                }
-            }
+        if ((side1+side2 <= side3) || (side1+side3 <= side2) || (side3+side2 <= side1)){
+            return false;
         }
     }
-
     return true;
 
 }

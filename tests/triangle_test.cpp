@@ -7,12 +7,12 @@ TEST(TriangleTest, DefaultConstructor) {
     EXPECT_NO_THROW(sq.area());
 }
 
-TEST(TriangleTest, ValidOctagonCreation) {
+TEST(TriangleTest, ValidTriangleCreation) {
     Point points[3] = {{0,4}, {4,0}, {0,0}};
     EXPECT_NO_THROW(Triangle tr(points));
 }
 
-TEST(TriangleTest, InvalidOctagonCreation) {
+TEST(TriangleTest, InvalidTriangleCreation) {
     Point invalidPoints[3] = {{0,0}, {1,0}, {2,0}};
     EXPECT_THROW(Triangle tr(invalidPoints), std::invalid_argument);
 }
